@@ -1,0 +1,2 @@
+#  Testing Environment
+This includes the basic test routines for the test is targeted to use unittest, but simply because it is part of the standard python3 distribution.  Additionally, this may not be the most "efficient" use of the testing since this is not for production usage. 
