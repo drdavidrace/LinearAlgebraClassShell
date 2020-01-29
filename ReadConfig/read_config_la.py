@@ -41,7 +41,15 @@ import os, sys
 import sympy as smp 
 #
 class ReadConfig:
-    def __init__(self, in_dir = None, in_file = None):
+    
+    def __init__(self, in_dir: str = None, in_file:str = None):
+        """Initialize the class to read a set of .json files to input matrices for 
+            a Linear Algebra
+        
+        Keyword Arguments:
+            in_dir {[str]} -- [Directory to read the .json file] (default: {None})
+            in_file {[str]} -- [File name to read ] (default: {None})
+        """
         assert in_dir is not None
         assert in_file is not None
         #
