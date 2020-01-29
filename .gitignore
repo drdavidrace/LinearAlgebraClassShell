@@ -1,0 +1,5 @@
+.eggs
+linear_algebra_class_shell.egg-info
+.vscode
+.vscode/*
+dist
