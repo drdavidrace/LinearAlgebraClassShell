@@ -1,0 +1,11 @@
+{
+    "question": "check_matrix_read_valid",
+    "matrix_type": "numpy",
+    "matrices": {
+        "A" : [
+            [1,2,3],
+            [4,5,6]
+        ]
+    }
+
+}

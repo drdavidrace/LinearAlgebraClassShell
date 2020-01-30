@@ -14,11 +14,11 @@ class InitializeReadConfig(unittest.TestCase):
         print("Testing the ReadConfig empty initialization")
         read_empty = ReadConfig()
         err_nums = read_empty.get_init_status()
-        self.assertEqual(err_nums & 0x1, 0x1)
-        self.assertEqual(err_nums & 0x10, 0x10)
-        self.assertEqual(err_nums & 0x100, 0x100)
-        self.assertEqual(err_nums & 0x1000, 0x1000)
-        self.assertEqual(err_nums & 0x10000, 0x10000)
+        self.assertEqual(err_nums & 0b1, 0b1)
+        self.assertEqual(err_nums & 0b10, 0b10)
+        self.assertEqual(err_nums & 0b100, 0b100)
+        self.assertEqual(err_nums & 0b1000, 0b1000)
+        self.assertEqual(err_nums & 0b10000, 0b10000)
 
     def test_initialization_file_name(self):
         print("\nTesting ReadConfig with valid file name")
@@ -38,8 +38,7 @@ class InitializeReadConfig(unittest.TestCase):
         ready_file_name = ReadConfig(full_path,file_name)
         ready_file_name.init_data_read()
         init_read_status = ready_file_name.get_init_read_errors()
-        self.assertEqual(init_read_status & 0x1,0x1)
-        self.assertEqual(init_read_status & 0x10, 0x10)
+        self.assertEqual(init_read_status & 0b1,0b1)
 
     def test_required_true(self):
         print("\nTesting ReadConfig required values for existence")
@@ -50,5 +49,5 @@ class InitializeReadConfig(unittest.TestCase):
         ready_file_name = ReadConfig(full_path,file_name)
         ready_file_name.init_data_read()
         init_read_status = ready_file_name.get_init_read_errors()
-        self.assertEqual(init_read_status & 0x1,0x0)
-        self.assertEqual(init_read_status & 0x10, 0x0)
+        self.assertEqual(init_read_status & 0b1,0b0)
+        self.assertEqual(init_read_status & 0b10, 0b0)

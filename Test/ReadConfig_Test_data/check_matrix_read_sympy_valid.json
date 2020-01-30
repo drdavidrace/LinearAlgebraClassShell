@@ -1,0 +1,14 @@
+{
+    "question": "check_matrix_read_sympy_valid",
+    "matrix_type": "sympy",
+    "matrices": {
+        "A" : [
+            [1,2,3],
+            [4,5,6]
+        ]
+    },
+    "variables": {
+        "B" : 2,
+        "C" :3.14159
+    }
+}

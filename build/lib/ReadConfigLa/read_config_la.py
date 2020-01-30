@@ -42,6 +42,9 @@ import json
 import sympy as smp 
 import numpy as np
 #
+#  not used much
+#
+from pprint import pprint
 class ReadConfig:
     
     def __init__(self, in_dir: str = None, in_file:str = None):
@@ -56,17 +59,20 @@ class ReadConfig:
         self.init_read_errors = 0
         self.full_file_name = None
         self.valid_matrix = set(["numpy", "sympy"])
+        self.in_data = None
+        self.question_number = None
+        self.matrix_type = None
         try:
             assert in_dir is not None
         except AssertionError:
             print("\tReadConfig __init__ must have a directory for reading json file")
-            self.error_numbers += 0x1
+            self.error_numbers += 0b1
             pass
         try:
             assert in_file is not None
         except AssertionError:
             print("\tReadConfig __init__ must have a file for reading json file")
-            self.error_numbers += 0x10
+            self.error_numbers += 0b10
             pass
         #
         #  basic checks
@@ -75,20 +81,20 @@ class ReadConfig:
             assert os.path.exists(in_dir) is True
         except:
             print("\tReadConfig __init__ Input directory does not exist")
-            self.error_numbers += 0x100
+            self.error_numbers += 0b100
             pass
         try:
             self.full_file_name = os.path.join(in_dir, in_file)
             assert os.path.isfile(self.full_file_name), "file does not exist"
         except:
             print("\tReadConfig __init__ Input file does not exist")
-            self.error_numbers += 0x1000
+            self.error_numbers += 0b1000
             pass
         try:
             file_extension = os.path.splitext(self.full_file_name)[-1]
             assert file_extension == ".json"
         except:
-            self.error_numbers += 0x10000
+            self.error_numbers += 0b10000
             print("\tReadConfig __init__ The input file has the wrong (no no extension).  Must be json")
             pass
     #
@@ -123,11 +129,51 @@ class ReadConfig:
             matrix_type = in_data.get("matrix_type",None)
             is_valid_question = self.__is_valid_question__(in_file, question_number)
             if not is_valid_question:
-                self.init_read_errors += 0x1
-            is_valid_matrix = self.__is_valid_matrix_type(matrix_type)
-            if not is_valid_matrix:
-                self.init_read_errors += 0x10
+                self.init_read_errors += 0b1
+            else:
+                self.question_number = question_number
+            if matrix_type is None:
+                self.matrix_type = None
+            else:
+                is_valid_matrix = self.__is_valid_matrix_type__(matrix_type)
+                if not is_valid_matrix:
+                    self.init_read_errors += 0b10
+                else:
+                    self.matrix_type = matrix_type.strip()
 
+            if self.init_read_errors == 0:
+                self.in_data = in_data
+    #
+    def get_json_data(self):
+        return self.in_data
+    #
+    def get_matrix(self,matrix_name):
+        if self.in_data is None:
+            return None
+        elif not ("matrices" in self.in_data):
+            return None
+        else:
+            if not(matrix_name in self.in_data["matrices"]):
+                return None
+            else:
+                if self.matrix_type == "numpy":
+                    return np.array(self.in_data["matrices"][matrix_name])
+                elif self.matrix_type == "sympy":
+                    return smp.Matrix(self.in_data["matrices"][matrix_name])
+                else:
+                    return self.in_data["matrices"][matrix_name]
+    #
+    def get_variable(self,var_name):
+        #Note:  the calling program must set the type of variable on return
+        if self.in_data is None:
+            return None
+        elif not ("variables" in self.in_data):
+            return None
+        else:
+            if not (var_name) in self.in_data["variables"]:
+                return None
+            else:
+                return self.in_data["variables"][var_name]
     #
     #  Internal Functions
     #
@@ -152,14 +198,14 @@ class ReadConfig:
         qname = in_question.strip()
         return (bname == qname)
     #
-    def __is_valid_matrix_type(self, in_matrix_type = None):
+    def __is_valid_matrix_type__(self, in_matrix_type = None):
         try:
             assert in_matrix_type is not None
         except:
             return False
             pass
-        print(in_matrix_type)
         if in_matrix_type in self.valid_matrix:
             return True
         else:
             return False
+    #

@@ -4,7 +4,7 @@ This set of routines is designed to _"standardize"_ a way to read .json files fo
 
 As part of the standard process, this includes the _"test"_ subdirectory to provide test cases for the ability to read input for the problems.  These tests may not provide 100% coverage, but they will improve with usage.
 
-#  Limitations
+# Limitations
 
 These routines are not meant to support large matrices _(namely ones larger than 10 on any side)_.  When using large matrices, either csv or binary input is the preferred method given the importance of input speed in these larger sizes.  Additionally, it is generally assumed that the matrices for large problems will be _"generated"_ from other routines so that the need for the clunkier classroom learning environment.
 
@@ -16,4 +16,56 @@ The input uses/abuses sympy for the input so that general calculations can be wr
 
 This directory contains a set of routines to read json files for use in a Linear Algebra classroom environment.  This is set up as a means for students to run tests without using Jupyter.  The graphics is more rudimentary and using Jupyter, but it is sometimes easier for students to use a standard python3 environment than loading the Jupyter environment.  While we would like for this to be completely self documenting in the json file, the user must tie the code that will use the json input to the variables in the code.
 
-It is highly recommended that the user use the same names as the variables in the code; however, that is not a requirement.
+It is highly recommended that the user use the same names as the variables in the code; however, that is not a requirement.  The required variables in the json file that will be checked are:
+
+*  question - the question number
+
+Optional variables
+
+*  matrix_type - {numpy, sympy}
+>Defaults to None
+
+*  matrices - The matrices are identified by a variable name under the "matrices" item in the dictionary -
+
+{
+    "question": "check_matrix_read_sympy_valid",
+    "matrix_type": "sympy",
+    "matrices": {
+        "A" : [
+            [1,2,3],
+            [4,5,6]
+        ]
+    }
+}
+
+If the matrix name doesn't exist, then None is returned
+
+*  variables - The variables are identified by a variable name under the "variables" item in the dictionary -
+
+{
+    "question": "check_matrix_read_sympy_valid",
+    "matrix_type": "sympy",
+    "matrices": {
+        "A" : [
+            [1,2,3],
+            [4,5,6]
+        ]
+    },
+    "variables": {
+        "B" : 2,
+        "C" :3.14159
+    }
+}
+
+If the variable name doesn't exist, then None is returned
+
+##  Calling Sequence
+
+The calling sequence for this code is:
+
+*  in_information = ReadConfig(dir_name, file_name)
+*  in_information.get_init_status()
+*  in_information.init_data_read()
+*  in_information.get_init_data_read_status()
+
+_NOTE:_  It is assumed that the python processing will know what to do with the matrices and variables
