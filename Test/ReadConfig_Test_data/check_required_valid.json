@@ -1,0 +1,6 @@
+{
+    "question": "check_required_valid",
+    "matrix_type": "numpy",
+    "number_matrices": 1,
+    "number_variables": 1
+}

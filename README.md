@@ -24,5 +24,16 @@ The last two are for those cases when we might want "better" output or mathemati
 
 Since I am using plain jupyter within the _"Windows Subsystem for Linux"_, this subsystem doesn't normally run a browser.  For this, both *"jupyter lab"* and *"jupyter notebook"* need to be started with the _"--no-browser"_ option.  To make this easy, I add aliases in the .bashrc file to start with this option automatically.  This allows the startup so that it doesn't cause an error.  Then we attach to the jupyter lab as normal using the browser in Windows.
 
+###  Add comment about using XWindows
+
 ## License
+
 This is licensed using the standard GNU General Public License v3.0; therefore, the code can be reused by others as desired.  It is hoped that attribution to Dr. David Race and Dr. Denise Race will be identified if this code is reused.
+
+## packaging
+
+For this package, I simply use "python ./setup.py sdist" and "python ./setup.py install" to keep things simple.  For testing (using unittest), I normally go through the following three steps:
+
+*  python ./setup.py clean --all
+*  python ./setup.py install
+*  ./runTests.sh

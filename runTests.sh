@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Running the tests"
-tests=("read_config_la")
+tests=("test_read_config_init")
 test_dir="./Test"
 for t in "${tests[@]}";
 do

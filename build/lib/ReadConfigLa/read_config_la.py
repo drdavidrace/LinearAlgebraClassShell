@@ -42,9 +42,6 @@ import json
 import sympy as smp 
 import numpy as np
 #
-#  not used much
-#
-from pprint import pprint
 class ReadConfig:
     
     def __init__(self, in_dir: str = None, in_file:str = None):
@@ -161,6 +158,7 @@ class ReadConfig:
         except:
             return False
             pass
+        print(in_matrix_type)
         if in_matrix_type in self.valid_matrix:
             return True
         else:
